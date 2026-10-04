@@ -11,12 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ApartmentsRouteImport } from './routes/apartments'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HomesRouteImport } from './routes/homes'
 import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PropertiesRouteImport } from './routes/properties'
 import { Route as VillasRouteImport } from './routes/villas'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as PropertiesCityRouteImport } from './routes/properties.$city'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 
@@ -28,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApartmentsRoute = ApartmentsRouteImport.update({
@@ -60,6 +68,16 @@ const VillasRoute = VillasRouteImport.update({
   path: '/villas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
 const PropertiesCityRoute = PropertiesCityRouteImport.update({
   id: '/$city',
   path: '/$city',
@@ -74,14 +92,17 @@ const PropertySlugRoute = PropertySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apartments': typeof ApartmentsRoute
   '/contact': typeof ContactRoute
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/admin/login': typeof AdminLoginRoute
   '/properties/$city': typeof PropertiesCityRoute
   '/property/$slug': typeof PropertySlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -92,35 +113,43 @@ export interface FileRoutesByTo {
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/admin/login': typeof AdminLoginRoute
   '/properties/$city': typeof PropertiesCityRoute
   '/property/$slug': typeof PropertySlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apartments': typeof ApartmentsRoute
   '/contact': typeof ContactRoute
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/admin/login': typeof AdminLoginRoute
   '/properties/$city': typeof PropertiesCityRoute
   '/property/$slug': typeof PropertySlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/apartments'
     | '/contact'
     | '/homes'
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/admin/login'
     | '/properties/$city'
     | '/property/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -131,25 +160,31 @@ export interface FileRouteTypes {
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/admin/login'
     | '/properties/$city'
     | '/property/$slug'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/apartments'
     | '/contact'
     | '/homes'
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/admin/login'
     | '/properties/$city'
     | '/property/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ApartmentsRoute: typeof ApartmentsRoute
   ContactRoute: typeof ContactRoute
   HomesRoute: typeof HomesRoute
@@ -173,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apartments': {
@@ -217,6 +259,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VillasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/properties/$city': {
       id: '/properties/$city'
       path: '/$city'
@@ -234,6 +290,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface PropertiesRouteChildren {
   PropertiesCityRoute: typeof PropertiesCityRoute
 }
@@ -249,6 +317,7 @@ const PropertiesRouteWithChildren = PropertiesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   ApartmentsRoute: ApartmentsRoute,
   ContactRoute: ContactRoute,
   HomesRoute: HomesRoute,
