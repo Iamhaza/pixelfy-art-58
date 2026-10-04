@@ -3,7 +3,7 @@ import { Building2, LayoutDashboard, LogOut, Settings, Users } from "lucide-reac
 import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/admin")({
   ssr:false,
-  beforeLoad: async ({location})=>{if(location.pathname==="/admin/login")return {user:null};const {data}=await supabase.auth.getUser();if(!data.user)throw redirect({to:"/admin/login"});const {data:ok}=await supabase.rpc("claim_admin_if_none");if(!ok)throw redirect({to:"/admin/login",search:{error:"not-admin"}});return {user:data.user}},
+  beforeLoad: async ({location})=>{if(location.pathname==="/admin/login")return {user:null};const {data}=await supabase.auth.getUser();if(!data.user)throw redirect({to:"/admin/login",search:{}});const {data:ok}=await supabase.rpc("claim_admin_if_none");if(!ok)throw redirect({to:"/admin/login",search:{error:"not-admin"}});return {user:data.user}},
   component:AdminLayout,
 });
 const nav=[{to:"/admin",label:"Dashboard",I:LayoutDashboard},{to:"/admin/properties",label:"Properties",I:Building2},{to:"/admin/leads",label:"Leads",I:Users},{to:"/admin/settings",label:"Settings",I:Settings}] as const;
