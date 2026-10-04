@@ -10,9 +10,9 @@ import { useEnquiry } from "@/components/site/EnquiryContext";
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()),
   head: () => ({ meta: [
-    { title: "Aranya Homes — Find Your New Home" },
+    { title: "Udaya Ventures — Find Your New Home" },
     { name: "description", content: "Explore premium homes, apartments, villas and residential plots across India, direct from the developer." },
-    { property: "og:title", content: "Aranya Homes — Find Your New Home" },
+    { property: "og:title", content: "Udaya Ventures — Find Your New Home" },
     { property: "og:description", content: "Premium properties across India with clear pricing and expert assistance." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
@@ -34,11 +34,11 @@ function HomePage() {
   return (
     <>
       <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden md:min-h-[calc(100svh-5rem)]">
-        <img src="/images/hero.jpg" alt="Premium Aranya Homes apartment development" width={1920} height={1080} className="absolute inset-0 size-full object-cover" />
+        <img src="/images/hero.jpg" alt="Premium Udaya Ventures apartment development" width={1920} height={1080} className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-hero-fade" />
         <div className="container-site relative flex min-h-[calc(100svh-4rem)] items-end pb-36 pt-24 md:min-h-[calc(100svh-5rem)] md:pb-40">
           <div className="max-w-3xl animate-rise text-overlay-foreground">
-            <p className="eyebrow">Welcome to Aranya Homes</p>
+            <p className="eyebrow">Welcome to Udaya Ventures</p>
             <h1 className="mt-4 text-5xl font-semibold leading-[1.04] md:text-7xl">Find a Place You'll Love to Call Home</h1>
             <p className="mt-5 max-w-2xl text-lg text-overlay-foreground/85 md:text-xl">Explore premium homes, apartments, villas and plots across India.</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -83,7 +83,7 @@ function HomePage() {
 
       <section className="container-site grid gap-12 py-16 md:grid-cols-2 md:items-center md:py-24">
         <div>
-          <p className="eyebrow">Why Aranya</p><h2 className="mt-2 text-4xl font-semibold md:text-5xl">A simpler way to find your next home</h2>
+          <p className="eyebrow">Why Udaya Ventures</p><h2 className="mt-2 text-4xl font-semibold md:text-5xl">A simpler way to find your next home</h2>
           <p className="mt-5 text-muted-foreground">We sell our properties directly, so you get clear information, transparent pricing and one expert team from your first enquiry onward.</p>
           <Button asChild variant="outline" size="lg" className="mt-7"><Link to="/about">Our approach <ArrowRight /></Link></Button>
         </div>

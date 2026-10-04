@@ -34,11 +34,11 @@ export const propertyBySlugQuery = (slug: string) =>
 
 export const DEFAULT_SETTINGS: Settings = {
   id: 1,
-  company_name: "Aranya Homes",
+  company_name: "Udaya Ventures",
   logo_url: "",
-  phone: "+919876543210",
-  whatsapp: "919876543210",
-  email: "sales@aranyahomes.in",
+  phone: "+918897901994",
+  whatsapp: "918897901994",
+  email: "sival2766@gmail.com",
   address: "Chennai, Tamil Nadu",
   instagram: "",
   facebook: "",
