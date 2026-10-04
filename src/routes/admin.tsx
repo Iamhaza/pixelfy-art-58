@@ -1,0 +1,10 @@
+import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router";
+import { Building2, LayoutDashboard, LogOut, Settings, Users } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+export const Route = createFileRoute("/admin")({
+  ssr:false,
+  beforeLoad: async ()=>{const {data}=await supabase.auth.getUser();if(!data.user)throw redirect({to:"/admin/login"});const {data:ok}=await supabase.rpc("claim_admin_if_none");if(!ok)throw redirect({to:"/admin/login",search:{error:"not-admin"}});return {user:data.user}},
+  component:AdminLayout,
+});
+const nav=[{to:"/admin",label:"Dashboard",I:LayoutDashboard},{to:"/admin/properties",label:"Properties",I:Building2},{to:"/admin/leads",label:"Leads",I:Users},{to:"/admin/settings",label:"Settings",I:Settings}] as const;
+function AdminLayout(){return <div className="min-h-screen bg-secondary pb-0"><div className="container-site grid min-h-screen gap-0 md:grid-cols-[14rem_1fr] md:py-6"><aside className="bg-primary p-5 text-primary-foreground md:rounded-l-xl"><Link to="/" className="font-display text-xl">Aranya Homes</Link><p className="mt-1 text-xs text-primary-foreground/60">Sales Administration</p><nav className="mt-8 flex gap-2 overflow-x-auto md:flex-col">{nav.map(({to,label,I})=><Link key={to} to={to} activeOptions={{exact:to==="/admin"}} className="flex shrink-0 items-center gap-3 rounded-md px-3 py-2.5 text-sm text-primary-foreground/70" activeProps={{className:"bg-sidebar-accent text-primary-foreground"}}><I className="size-4"/>{label}</Link>)}</nav><button onClick={async()=>{await supabase.auth.signOut();window.location.href="/admin/login"}} className="mt-6 flex items-center gap-2 px-3 text-sm text-primary-foreground/60"><LogOut className="size-4"/>Sign out</button></aside><div className="min-w-0 bg-background p-5 md:rounded-r-xl md:p-8"><Outlet/></div></div></div>}

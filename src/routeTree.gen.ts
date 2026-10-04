@@ -17,6 +17,8 @@ import { Route as HomesRouteImport } from './routes/homes'
 import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PropertiesRouteImport } from './routes/properties'
 import { Route as VillasRouteImport } from './routes/villas'
+import { Route as PropertiesCityRouteImport } from './routes/properties.$city'
+import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +60,16 @@ const VillasRoute = VillasRouteImport.update({
   path: '/villas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PropertiesCityRoute = PropertiesCityRouteImport.update({
+  id: '/$city',
+  path: '/$city',
+  getParentRoute: () => PropertiesRoute,
+} as any)
+const PropertySlugRoute = PropertySlugRouteImport.update({
+  id: '/property/$slug',
+  path: '/property/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,8 +78,10 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
-  '/properties': typeof PropertiesRoute
+  '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/properties/$city': typeof PropertiesCityRoute
+  '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,8 +90,10 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
-  '/properties': typeof PropertiesRoute
+  '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/properties/$city': typeof PropertiesCityRoute
+  '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,8 +103,10 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
-  '/properties': typeof PropertiesRoute
+  '/properties': typeof PropertiesRouteWithChildren
   '/villas': typeof VillasRoute
+  '/properties/$city': typeof PropertiesCityRoute
+  '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +119,8 @@ export interface FileRouteTypes {
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/properties/$city'
+    | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +131,8 @@ export interface FileRouteTypes {
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/properties/$city'
+    | '/property/$slug'
   id:
     | '__root__'
     | '/'
@@ -121,6 +143,8 @@ export interface FileRouteTypes {
     | '/plots'
     | '/properties'
     | '/villas'
+    | '/properties/$city'
+    | '/property/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,8 +154,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   HomesRoute: typeof HomesRoute
   PlotsRoute: typeof PlotsRoute
-  PropertiesRoute: typeof PropertiesRoute
+  PropertiesRoute: typeof PropertiesRouteWithChildren
   VillasRoute: typeof VillasRoute
+  PropertySlugRoute: typeof PropertySlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,8 +217,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VillasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/properties/$city': {
+      id: '/properties/$city'
+      path: '/$city'
+      fullPath: '/properties/$city'
+      preLoaderRoute: typeof PropertiesCityRouteImport
+      parentRoute: typeof PropertiesRoute
+    }
+    '/property/$slug': {
+      id: '/property/$slug'
+      path: '/property/$slug'
+      fullPath: '/property/$slug'
+      preLoaderRoute: typeof PropertySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface PropertiesRouteChildren {
+  PropertiesCityRoute: typeof PropertiesCityRoute
+}
+
+const PropertiesRouteChildren: PropertiesRouteChildren = {
+  PropertiesCityRoute: PropertiesCityRoute,
+}
+
+const PropertiesRouteWithChildren = PropertiesRoute._addFileChildren(
+  PropertiesRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -202,8 +253,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   HomesRoute: HomesRoute,
   PlotsRoute: PlotsRoute,
-  PropertiesRoute: PropertiesRoute,
+  PropertiesRoute: PropertiesRouteWithChildren,
   VillasRoute: VillasRoute,
+  PropertySlugRoute: PropertySlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
