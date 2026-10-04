@@ -28,7 +28,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
               Enter your details and our property expert will contact you.
             </DialogDescription>
           </DialogHeader>
-          <EnquiryForm key={key} propertyId={target?.id} propertyName={target?.name} />
+          <EnquiryForm key={key} {...(target ? { propertyId: target.id, propertyName: target.name } : {})} />
         </DialogContent>
       </Dialog>
     </Ctx.Provider>

@@ -5,6 +5,12 @@ import { BUDGETS, CITIES, TYPE_PLURAL, type PropertyType } from "@/lib/format";
 import { PropertyCard } from "./PropertyCard";
 
 export type ListingFilters = { type?: PropertyType; city?: string; budget?: string };
+const withFilter = (filters: ListingFilters, key: keyof ListingFilters, value: string) => {
+  const next = { ...filters };
+  if (value) next[key] = value as PropertyType;
+  else delete next[key];
+  return next;
+};
 
 const sel =
   "h-11 rounded-md border border-input bg-card px-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring";
@@ -42,18 +48,18 @@ export function PropertyListing({
       {onChange && (
         <div className="mt-8 grid grid-cols-1 gap-3 rounded-xl bg-secondary p-4 sm:grid-cols-3">
           {!lockType && (
-            <select aria-label="Property type" className={sel} value={filters.type ?? ""} onChange={(e) => onChange({ ...filters, type: (e.target.value || undefined) as PropertyType | undefined })}>
+            <select aria-label="Property type" className={sel} value={filters.type ?? ""} onChange={(e) => onChange(withFilter(filters, "type", e.target.value))}>
               <option value="">All types</option>
               {(Object.keys(TYPE_PLURAL) as PropertyType[]).map((t) => (
                 <option key={t} value={t}>{TYPE_PLURAL[t]}</option>
               ))}
             </select>
           )}
-          <select aria-label="Location" className={sel} value={filters.city ?? ""} onChange={(e) => onChange({ ...filters, city: e.target.value || undefined })}>
+          <select aria-label="Location" className={sel} value={filters.city ?? ""} onChange={(e) => onChange(withFilter(filters, "city", e.target.value))}>
             <option value="">All locations</option>
             {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
-          <select aria-label="Budget" className={sel} value={filters.budget ?? ""} onChange={(e) => onChange({ ...filters, budget: e.target.value || undefined })}>
+          <select aria-label="Budget" className={sel} value={filters.budget ?? ""} onChange={(e) => onChange(withFilter(filters, "budget", e.target.value))}>
             <option value="">Any budget</option>
             {BUDGETS.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
           </select>

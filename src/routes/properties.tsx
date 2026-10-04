@@ -4,11 +4,13 @@ import { publishedPropertiesQuery } from "@/lib/queries";
 import { PropertyListing, type ListingFilters } from "@/components/site/PropertyListing";
 
 export const Route = createFileRoute("/properties")({
-  validateSearch: (s: Record<string, unknown>): ListingFilters => ({
-    city: typeof s.city === "string" ? s.city : undefined,
-    budget: typeof s.budget === "string" ? s.budget : undefined,
-    type: ["apartment","villa","home","plot"].includes(String(s.type)) ? s.type as ListingFilters["type"] : undefined,
-  }),
+  validateSearch: (s: Record<string, unknown>): ListingFilters => {
+    const filters: ListingFilters = {};
+    if (typeof s["city"] === "string") filters.city = s["city"];
+    if (typeof s["budget"] === "string") filters.budget = s["budget"];
+    if (["apartment","villa","home","plot"].includes(String(s["type"]))) filters.type = s["type"] as ListingFilters["type"];
+    return filters;
+  },
   loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()),
   head: () => ({ meta: [
     { title: "Our Properties — Aranya Homes" },
