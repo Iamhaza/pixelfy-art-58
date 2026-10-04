@@ -1,0 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { publishedPropertiesQuery } from "@/lib/queries";
+import { PropertyListing, type ListingFilters } from "@/components/site/PropertyListing";
+export const Route = createFileRoute("/apartments")({ loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()), head: () => ({ meta: [{ title: "Premium Apartments — Aranya Homes" },{ name:"description",content:"Explore premium apartments in Chennai, Bengaluru and leading Indian cities."},{ property:"og:title",content:"Premium Apartments — Aranya Homes"},{ property:"og:description",content:"Well-planned apartments in prime locations, direct from the developer."},{ property:"og:type",content:"website"},{ name:"twitter:card",content:"summary_large_image"}] }), component: Page });
+function Page(){ const [f,setF]=useState<ListingFilters>({type:"apartment"}); return <PropertyListing title="Apartments" intro="Well-planned residences in connected neighbourhoods, designed for modern family life." filters={f} onChange={setF} lockType/> }

@@ -1,0 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { publishedPropertiesQuery } from "@/lib/queries";
+import { PropertyListing, type ListingFilters } from "@/components/site/PropertyListing";
+export const Route = createFileRoute("/villas")({ loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()), head: () => ({ meta: [{ title: "Luxury Villas — Aranya Homes" },{ name:"description",content:"Discover private villas and sky villas in premium Indian locations."},{ property:"og:title",content:"Luxury Villas — Aranya Homes"},{ property:"og:description",content:"Spacious premium villas with private outdoor living."},{ property:"og:type",content:"website"},{ name:"twitter:card",content:"summary_large_image"}] }), component: Page });
+function Page(){ const [f,setF]=useState<ListingFilters>({type:"villa"}); return <PropertyListing title="Villas" intro="Private, spacious homes in thoughtfully planned communities." filters={f} onChange={setF} lockType/> }
