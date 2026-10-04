@@ -14,16 +14,234 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          created_at: string
+          id: string
+          location: string
+          mobile: string
+          name: string
+          property_id: string | null
+          property_name: string
+          property_type: string
+          status: Database["public"]["Enums"]["lead_status"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location?: string
+          mobile: string
+          name: string
+          property_id?: string | null
+          property_name?: string
+          property_type?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string
+          mobile?: string
+          name?: string
+          property_id?: string | null
+          property_name?: string
+          property_type?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      properties: {
+        Row: {
+          address: string
+          amenities: string[]
+          area: string
+          bathrooms: number | null
+          bedrooms: number | null
+          city: string
+          configuration: string
+          created_at: string
+          description: string
+          developer: string
+          facing: string
+          featured: boolean
+          floor_plans: string[]
+          highlights: string[]
+          id: string
+          images: string[]
+          location: string
+          map_link: string
+          name: string
+          new_launch: boolean
+          plot_area: string
+          possession: string
+          price_from: number
+          project_status: string
+          published: boolean
+          rera: string
+          road_width: string
+          seo_description: string
+          seo_title: string
+          slug: string
+          type: Database["public"]["Enums"]["property_type"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string
+          amenities?: string[]
+          area?: string
+          bathrooms?: number | null
+          bedrooms?: number | null
+          city?: string
+          configuration?: string
+          created_at?: string
+          description?: string
+          developer?: string
+          facing?: string
+          featured?: boolean
+          floor_plans?: string[]
+          highlights?: string[]
+          id?: string
+          images?: string[]
+          location?: string
+          map_link?: string
+          name: string
+          new_launch?: boolean
+          plot_area?: string
+          possession?: string
+          price_from?: number
+          project_status?: string
+          published?: boolean
+          rera?: string
+          road_width?: string
+          seo_description?: string
+          seo_title?: string
+          slug: string
+          type: Database["public"]["Enums"]["property_type"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          amenities?: string[]
+          area?: string
+          bathrooms?: number | null
+          bedrooms?: number | null
+          city?: string
+          configuration?: string
+          created_at?: string
+          description?: string
+          developer?: string
+          facing?: string
+          featured?: boolean
+          floor_plans?: string[]
+          highlights?: string[]
+          id?: string
+          images?: string[]
+          location?: string
+          map_link?: string
+          name?: string
+          new_launch?: boolean
+          plot_area?: string
+          possession?: string
+          price_from?: number
+          project_status?: string
+          published?: boolean
+          rera?: string
+          road_width?: string
+          seo_description?: string
+          seo_title?: string
+          slug?: string
+          type?: Database["public"]["Enums"]["property_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          address: string
+          company_name: string
+          email: string
+          facebook: string
+          id: number
+          instagram: string
+          linkedin: string
+          logo_url: string
+          phone: string
+          whatsapp: string
+          youtube: string
+        }
+        Insert: {
+          address?: string
+          company_name?: string
+          email?: string
+          facebook?: string
+          id?: number
+          instagram?: string
+          linkedin?: string
+          logo_url?: string
+          phone?: string
+          whatsapp?: string
+          youtube?: string
+        }
+        Update: {
+          address?: string
+          company_name?: string
+          email?: string
+          facebook?: string
+          id?: number
+          instagram?: string
+          linkedin?: string
+          logo_url?: string
+          phone?: string
+          whatsapp?: string
+          youtube?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_exists: { Args: never; Returns: boolean }
+      claim_admin_if_none: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      lead_status: "new" | "contacted" | "closed"
+      property_type: "apartment" | "villa" | "home" | "plot"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +368,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      lead_status: ["new", "contacted", "closed"],
+      property_type: ["apartment", "villa", "home", "plot"],
+    },
   },
 } as const
