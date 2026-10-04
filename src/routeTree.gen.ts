@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HomesRouteImport } from './routes/homes'
 import { Route as PlotsRouteImport } from './routes/plots'
 import { Route as PropertiesRouteImport } from './routes/properties'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as VillasRouteImport } from './routes/villas'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
@@ -64,6 +65,11 @@ const PlotsRoute = PlotsRouteImport.update({
 const PropertiesRoute = PropertiesRouteImport.update({
   id: '/properties',
   path: '/properties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VillasRoute = VillasRouteImport.update({
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/villas': typeof VillasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/villas': typeof VillasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/homes': typeof HomesRoute
   '/plots': typeof PlotsRoute
   '/properties': typeof PropertiesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/villas': typeof VillasRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
     | '/homes'
     | '/plots'
     | '/properties'
+    | '/sitemap.xml'
     | '/villas'
     | '/admin/leads'
     | '/admin/login'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/homes'
     | '/plots'
     | '/properties'
+    | '/sitemap.xml'
     | '/villas'
     | '/admin/leads'
     | '/admin/login'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/homes'
     | '/plots'
     | '/properties'
+    | '/sitemap.xml'
     | '/villas'
     | '/admin/leads'
     | '/admin/login'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   HomesRoute: typeof HomesRoute
   PlotsRoute: typeof PlotsRoute
   PropertiesRoute: typeof PropertiesRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VillasRoute: typeof VillasRoute
   PropertySlugRoute: typeof PropertySlugRoute
 }
@@ -286,6 +299,13 @@ declare module '@tanstack/react-router' {
       path: '/properties'
       fullPath: '/properties'
       preLoaderRoute: typeof PropertiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/villas': {
@@ -386,6 +406,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomesRoute: HomesRoute,
   PlotsRoute: PlotsRoute,
   PropertiesRoute: PropertiesRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VillasRoute: VillasRoute,
   PropertySlugRoute: PropertySlugRoute,
 }
