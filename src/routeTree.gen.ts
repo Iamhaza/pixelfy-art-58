@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ApartmentsRouteImport } from './routes/apartments'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HomesRouteImport } from './routes/homes'
+import { Route as PlotsRouteImport } from './routes/plots'
+import { Route as PropertiesRouteImport } from './routes/properties'
+import { Route as VillasRouteImport } from './routes/villas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApartmentsRoute = ApartmentsRouteImport.update({
+  id: '/apartments',
+  path: '/apartments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomesRoute = HomesRouteImport.update({
+  id: '/homes',
+  path: '/homes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlotsRoute = PlotsRouteImport.update({
+  id: '/plots',
+  path: '/plots',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PropertiesRoute = PropertiesRouteImport.update({
+  id: '/properties',
+  path: '/properties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VillasRoute = VillasRouteImport.update({
+  id: '/villas',
+  path: '/villas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/apartments': typeof ApartmentsRoute
+  '/contact': typeof ContactRoute
+  '/homes': typeof HomesRoute
+  '/plots': typeof PlotsRoute
+  '/properties': typeof PropertiesRoute
+  '/villas': typeof VillasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/apartments': typeof ApartmentsRoute
+  '/contact': typeof ContactRoute
+  '/homes': typeof HomesRoute
+  '/plots': typeof PlotsRoute
+  '/properties': typeof PropertiesRoute
+  '/villas': typeof VillasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/apartments': typeof ApartmentsRoute
+  '/contact': typeof ContactRoute
+  '/homes': typeof HomesRoute
+  '/plots': typeof PlotsRoute
+  '/properties': typeof PropertiesRoute
+  '/villas': typeof VillasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/apartments'
+    | '/contact'
+    | '/homes'
+    | '/plots'
+    | '/properties'
+    | '/villas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/apartments'
+    | '/contact'
+    | '/homes'
+    | '/plots'
+    | '/properties'
+    | '/villas'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/apartments'
+    | '/contact'
+    | '/homes'
+    | '/plots'
+    | '/properties'
+    | '/villas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ApartmentsRoute: typeof ApartmentsRoute
+  ContactRoute: typeof ContactRoute
+  HomesRoute: typeof HomesRoute
+  PlotsRoute: typeof PlotsRoute
+  PropertiesRoute: typeof PropertiesRoute
+  VillasRoute: typeof VillasRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apartments': {
+      id: '/apartments'
+      path: '/apartments'
+      fullPath: '/apartments'
+      preLoaderRoute: typeof ApartmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/homes': {
+      id: '/homes'
+      path: '/homes'
+      fullPath: '/homes'
+      preLoaderRoute: typeof HomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plots': {
+      id: '/plots'
+      path: '/plots'
+      fullPath: '/plots'
+      preLoaderRoute: typeof PlotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/properties': {
+      id: '/properties'
+      path: '/properties'
+      fullPath: '/properties'
+      preLoaderRoute: typeof PropertiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/villas': {
+      id: '/villas'
+      path: '/villas'
+      fullPath: '/villas'
+      preLoaderRoute: typeof VillasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ApartmentsRoute: ApartmentsRoute,
+  ContactRoute: ContactRoute,
+  HomesRoute: HomesRoute,
+  PlotsRoute: PlotsRoute,
+  PropertiesRoute: PropertiesRoute,
+  VillasRoute: VillasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
