@@ -16,9 +16,9 @@ export const Route = createFileRoute("/property/$slug")({
     return p;
   },
   head: ({ loaderData }) => ({ meta: [
-    { title: loaderData ? `${loaderData.seo_title || loaderData.name} — Aranya Homes` : "Property Not Found — Aranya Homes" },
-    { name:"description",content:loaderData?.seo_description || loaderData?.description || "Property details from Aranya Homes." },
-    { property:"og:title",content:loaderData?.name || "Aranya Homes Property" },
+    { title: loaderData ? `${loaderData.seo_title || loaderData.name} — Udaya Ventures` : "Property Not Found — Udaya Ventures" },
+    { name:"description",content:loaderData?.seo_description || loaderData?.description || "Property details from Udaya Ventures." },
+    { property:"og:title",content:loaderData?.name || "Udaya Ventures Property" },
     { property:"og:description",content:loaderData?.seo_description || loaderData?.description || "Explore this property." },
     { property:"og:type",content:"website" }, { name:"twitter:card",content:"summary_large_image" },
   ]}),

@@ -14,9 +14,9 @@ export const Route = createFileRoute("/properties")({
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()),
   head: () => ({ meta: [
-    { title: "Our Properties — Aranya Homes" },
+    { title: "Our Properties — Udaya Ventures" },
     { name: "description", content: "Browse premium apartments, villas, independent homes and residential plots across India." },
-    { property: "og:title", content: "Our Properties — Aranya Homes" },
+    { property: "og:title", content: "Our Properties — Udaya Ventures" },
     { property: "og:description", content: "Explore available properties with clear prices and direct expert assistance." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ]}),
