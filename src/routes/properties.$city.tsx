@@ -1,0 +1,7 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { publishedPropertiesQuery } from "@/lib/queries";
+import { PropertyListing, type ListingFilters } from "@/components/site/PropertyListing";
+export const Route = createFileRoute("/properties/$city")({ loader:({context})=>context.queryClient.ensureQueryData(publishedPropertiesQuery()), head:({params})=>{const c=title(params.city);return {meta:[{title:`Properties in ${c} — Aranya Homes`},{name:"description",content:`Explore premium homes, apartments, villas and plots in ${c}.`},{property:"og:title",content:`Properties in ${c}`},{property:"og:description",content:`Direct property sales in ${c} with transparent pricing.`},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]};}, component:Page });
+function title(s:string){return s.split("-").map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(" ")}
+function Page(){const {city}=Route.useParams();const c=title(city);const [f,setF]=useState<ListingFilters>({city:c});return <PropertyListing title={`Properties in ${c}`} intro={`Explore available Aranya Homes properties in ${c}.`} filters={f} onChange={setF}/>}
