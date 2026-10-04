@@ -8,7 +8,8 @@ export const Route = createFileRoute("/properties")({
     const filters: ListingFilters = {};
     if (typeof s["city"] === "string") filters.city = s["city"];
     if (typeof s["budget"] === "string") filters.budget = s["budget"];
-    if (["apartment","villa","home","plot"].includes(String(s["type"]))) filters.type = s["type"] as ListingFilters["type"];
+    const propertyType = String(s["type"]);
+    if (["apartment","villa","home","plot"].includes(propertyType)) filters.type = propertyType as NonNullable<ListingFilters["type"]>;
     return filters;
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(publishedPropertiesQuery()),
